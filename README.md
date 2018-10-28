@@ -1,4 +1,4 @@
-## Small we map for navigation
+## Small web map for navigation
 
 This is a small web map to navigate in NYC, displaying few markers and device geolocation
 
