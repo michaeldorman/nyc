@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NYC</title>
+    <link rel="stylesheet" href="css/leaflet.css">
+    <script src="js/leaflet.js"></script>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        html, body, #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+
+// Create variable to hold map element, give initial settings to map
+var map = L.map("map", {center: [40.785194, -73.949512], zoom: 15});
+
+// Add OpenStreetMap tile layer to map element
+L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", 
+    {attribution: "© OpenStreetMap"}
+).addTo(map);
+
+
+// Add points
+var pnt1 = L.marker([40.780213, -73.945887]).bindPopup("Hotel").addTo(map).openPopup();
+var pnt2 = L.marker([40.792139, -73.952361]).bindPopup("Exposome Symposium").addTo(map);
+var pnt3 = L.marker([40.791524, -73.951994]).bindPopup("Allan's Lab").addTo(map);
+
+function onLocationFound(e) {
+	var radius = e.accuracy / 2;
+
+	L.marker(e.latlng).addTo(map)
+		.bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+	L.circle(e.latlng, radius).addTo(map);
+}
+
+function onLocationError(e) {
+	alert(e.message);
+}
+
+map.on('locationfound', onLocationFound);
+map.on('locationerror', onLocationError);
+
+map.locate({setView: true, maxZoom: 16});
+
+    </script>
+</body>
+</html>
